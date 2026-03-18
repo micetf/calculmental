@@ -30,6 +30,7 @@ class Reussite
         }
 
         if (!file_exists($this->fichier)) {
+            $this->isRecord = true;
             $record    = $temps;
             $moyenne   = $temps;
             $reussites = 1;

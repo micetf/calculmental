@@ -1,0 +1,21 @@
+{
+    "name": "micetf/calculmental",
+    "description": "Outil de calcul mental pour l'école primaire",
+    "type": "project",
+    "require": {
+        "php": ">=8.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "classmap": [
+            "actions/compteur/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
+}
