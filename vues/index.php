@@ -51,8 +51,8 @@ if ($vue['nom'] != 'imprimer.php') {
         <?php
         include $vue['nom'];
     ?>
-        <script src="../js-micetf/contact.js"></script>
-        <script src="../assets/js/bof.js"></script>
+        <script src="assets/js/contact.js"></script>
+        <script src="assets/js/bof.js"></script>
     </body>
 </html>
 <?php

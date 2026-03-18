@@ -58,7 +58,7 @@ if (isset($_GET['admin'])) {
 }
 
 $isAdmin = isset($_COOKIE['admin']) && hash_equals($adminSecret, $_COOKIE['admin']);
-$vue['audience'] = $isAdmin ? '' : 'vues' . DIRECTORY_SEPARATOR . 'audience.php';
+$vue['audience'] = ''; // audience.php retiré (fichier non disponible dans ce dépôt)
 
 // --- Dispatch sécurisé ---
 include $dispatch[$actionKey];
