@@ -23,9 +23,7 @@ if ($vue['nom'] != 'imprimer.php') {
                 </div>
                 <div class="collapse navbar-collapse pull-right">
                     <label class="label label-default">
-                        <?php
-                                echo date("d/m/Y");
-    ?>
+                        <?php echo date("d/m/Y"); ?>
                     </label>
                     &nbsp;
                     <a class="btn btn-default navbar-btn"

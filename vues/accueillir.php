@@ -1,5 +1,5 @@
 
-    <div class="row">
+    <div class="container">
         <div class="jumbotron">
             <h2 class="text-center">Bienvenue !</h2>
             <hr>
@@ -52,17 +52,18 @@ $liensPage = join(" ", $boutons);
             <h3 class="text-center">Bon courage !</h3>
         </div>
     </div>
+    <div class="container">
 
 <?php
 foreach ($niveaux as $niveau) {
     $niveauMajuscule = strtoupper($niveau);
-?>
+    ?>
     <div class="panel panel-default" id="<?php echo $niveau; ?>">
         <div class="panel-heading text-center">
             <h3>
 <?php
-echo preg_replace("/" . $niveau . "\" class=\"/", $niveau . "\" class=\"active ", $liensPage);
-?>
+    echo preg_replace("/" . $niveau . "\" class=\"/", $niveau . "\" class=\"active ", $liensPage);
+    ?>
             </h3>
         </div>
         <div class="panel-body">
@@ -75,7 +76,7 @@ foreach ($classeur[$niveau] as $fiche) {
     $reussite = new Reussite($niveau, $numero);
     $record = $reussite->getRecord();
     $moyenne = $reussite->getMoyenne();
-?>
+    ?>
                     <tr>
                         <td><?php echo $objectif; ?></td>
                         <td>
@@ -94,21 +95,21 @@ foreach ($classeur[$niveau] as $fiche) {
                         <td>
 <?php
 if ($record == '') {
-?>
+    ?>
                             <span class="label label-default">???</span>
 <?php
 } else {
-?>
+    ?>
                             <span class="label label-danger"><?php echo $record; ?> s.</span>
                             <span class="label label-success">(temps moyen : <?php echo round($moyenne); ?> s.)</span>
 <?php
 }
-?>
+    ?>
                         </td>
                     </tr>
 <?php
 }
-?>
+    ?>
                 </tbody>
             </table>
         </div>
@@ -117,7 +118,7 @@ if ($record == '') {
 }   // panel niveau
 ?>
 </div>
-
+                            </div>
 <div id="top">
     <a class="btn btn-primary btn-lg"
         href="#"
