@@ -1,15 +1,29 @@
 <?php
 
+/**
+ * Comptage des impressions PDF par fiche d'exercice.
+ *
+ * Chaque fiche a un fichier texte associé (ex : cp001I.txt)
+ * contenant le nombre total d'impressions PDF générées.
+ */
 class Impression
 {
+    /** @var string Chemin absolu vers le fichier compteur d'impressions */
     private $fichier;
 
+    /**
+     * @param string $niveau Niveau scolaire (cp, ce1, ce2, cm1, cm2)
+     * @param string $numero Numéro de fiche sur 3 chiffres (ex : "001")
+     */
     public function __construct($niveau, $numero)
     {
         $this->fichier = dirname(__FILE__) . DIRECTORY_SEPARATOR
             . $niveau . $numero . 'I.txt';
     }
 
+    /**
+     * Incrémente le compteur d'impressions si le visiteur n'est pas un robot.
+     */
     public function ajouter()
     {
         if (Visiteur::isRobot() === false) {
@@ -32,12 +46,18 @@ class Impression
         }
     }
 
+    /**
+     * Retourne un tableau HTML des statistiques d'impressions de toutes les fiches.
+     * Utilisé par l'interface d'administration.
+     *
+     * @return string HTML contenant le nombre total d'impressions et un tableau détaillé
+     */
     public static function etat()
     {
-        $nomRep       = dirname(__FILE__);
-        $tmp          = [];
+        $nomRep        = dirname(__FILE__);
+        $tmp           = [];
         $nbImpressions = 0;
-        $pRep         = opendir($nomRep);
+        $pRep          = opendir($nomRep);
 
         while (false !== ($nomFichier = readdir($pRep))) {
             if (preg_match('/^c.{3,4}I\.txt$/', $nomFichier)) {

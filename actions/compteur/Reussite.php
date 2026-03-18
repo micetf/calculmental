@@ -1,10 +1,24 @@
 <?php
 
+/**
+ * Gestion des records et statistiques par fiche d'exercice.
+ *
+ * Chaque fiche (niveau + numéro) a un fichier texte associé
+ * (ex : cp001R.txt) contenant le record, la moyenne et le nombre
+ * de réussites sans erreur.
+ */
 class Reussite
 {
+    /** @var string Chemin absolu vers le fichier de statistiques */
     private $fichier;
+
+    /** @var bool Indique si le dernier temps enregistré est un nouveau record */
     private $isRecord = false;
 
+    /**
+     * @param string $niveau Niveau scolaire (cp, ce1, ce2, cm1, cm2)
+     * @param string $numero Numéro de fiche sur 3 chiffres (ex : "001")
+     */
     public function __construct($niveau, $numero)
     {
         if (
@@ -18,11 +32,22 @@ class Reussite
         }
     }
 
+    /**
+     * Indique si le dernier appel à setTemps() a produit un nouveau record.
+     *
+     * @return bool
+     */
     public function isRecord()
     {
         return $this->isRecord;
     }
 
+    /**
+     * Enregistre un temps et met à jour record, moyenne et nombre de réussites.
+     * Un temps inférieur à 5 secondes est ignoré (suspicion de triche).
+     *
+     * @param int|float $temps Temps en secondes
+     */
     public function setTemps($temps)
     {
         if (!is_numeric($temps)) {
@@ -35,10 +60,10 @@ class Reussite
             $moyenne   = $temps;
             $reussites = 1;
         } else {
-            $contenu  = file($this->fichier);
-
-            $tmp      = explode(':', $contenu[0]);
+            $contenu   = file($this->fichier);
+            $tmp       = explode(':', $contenu[0]);
             $oldRecord = rtrim($tmp[1]);
+
             if ($oldRecord === '' || (is_numeric($oldRecord) && $temps > 4 && $temps < $oldRecord)) {
                 $this->isRecord = true;
                 $record = $temps;
@@ -47,11 +72,11 @@ class Reussite
                 $record = $oldRecord;
             }
 
-            $tmp       = explode(':', $contenu[1]);
+            $tmp        = explode(':', $contenu[1]);
             $oldMoyenne = rtrim($tmp[1]);
-            $tmp       = explode(':', $contenu[2]);
-            $reussites = rtrim($tmp[1]);
-            $moyenne   = (($oldMoyenne * $reussites) + $temps) / ($reussites + 1);
+            $tmp        = explode(':', $contenu[2]);
+            $reussites  = rtrim($tmp[1]);
+            $moyenne    = (($oldMoyenne * $reussites) + $temps) / ($reussites + 1);
             $reussites++;
         }
 
@@ -70,6 +95,11 @@ class Reussite
         fclose($pFichier);
     }
 
+    /**
+     * Retourne le record actuel de la fiche.
+     *
+     * @return string Temps en secondes, ou '' si aucun record enregistré
+     */
     public function getRecord()
     {
         if (!file_exists($this->fichier)) {
@@ -80,6 +110,11 @@ class Reussite
         return rtrim($tmp[1]);
     }
 
+    /**
+     * Retourne le temps moyen de la fiche.
+     *
+     * @return string Temps moyen en secondes, ou '' si aucune donnée
+     */
     public function getMoyenne()
     {
         if (!file_exists($this->fichier)) {
@@ -90,6 +125,12 @@ class Reussite
         return rtrim($tmp[1]);
     }
 
+    /**
+     * Retourne un tableau HTML des statistiques de toutes les fiches.
+     * Utilisé par l'interface d'administration.
+     *
+     * @return string HTML contenant le nombre total de réussites et un tableau détaillé
+     */
     public static function etat()
     {
         $nomRep      = dirname(__FILE__);
