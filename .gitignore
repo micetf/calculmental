@@ -24,20 +24,11 @@ yarn-error.log*
 pnpm-debug.log*
 
 # ============================================================
-# PHP — Dépendances Composer
-# vendor/fpdf/ est exclu de ces règles car versionné manuellement
+# PHP — Dépendances Composer (régénérables via composer install)
+# vendor/fpdf/ est exclu de cette règle — versionné manuellement
 # ============================================================
-*.log
-/vendor/autoload.php
-/vendor/bin/
-/vendor/composer/
-/vendor/myclabs/
-/vendor/nikic/
-/vendor/phar-io/
-/vendor/phpunit/
-/vendor/sebastian/
-/vendor/staabm/
-/vendor/theseer/
+/vendor/*
+!/vendor/fpdf/
 
 # FPDF — garder uniquement fpdf.php et font/
 /vendor/fpdf/doc/
