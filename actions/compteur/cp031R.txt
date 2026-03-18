@@ -1,3 +1,0 @@
-record:120
-moyenne:120
-reussites:1720
