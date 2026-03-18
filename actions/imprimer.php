@@ -12,6 +12,11 @@ class PDF extends FPDF
     public $numero;
     public $correction = false;
 
+    private function encode(string $str): string
+    {
+        return mb_convert_encoding($str, 'ISO-8859-1', 'UTF-8');
+    }
+
     public function setReferences($niveau, $numero)
     {
         $this->niveau = $niveau;
@@ -30,7 +35,7 @@ class PDF extends FPDF
             $this->Cell(0, 15, "C O R R E C T I O N", 1, 1, 'C');
         } else {
             $this->SetTextColor(0, 0, 0);
-            $this->Cell(95, 15, utf8_decode('Prénom :'), 1, 0, 'L');
+            $this->Cell(95, 15, $this->encode('Prénom :'), 1, 0, 'L');
             $this->Cell(95, 15, 'Date :', 1, 1, 'L');
         }
         $this->SetFont('Times', 'B', 16);
@@ -38,7 +43,7 @@ class PDF extends FPDF
         $this->Cell(0, 11, "CALCUL MENTAL", 1, 1, 'C');
         $this->SetFont('Arial', 'B', 12);
         $this->SetTextColor(0, 0, 0);
-        $this->Cell(0, 11, utf8_decode("OBJECTIF : $this->objectif"), 0, 1, 'C');
+        $this->Cell(0, 11, $this->encode("OBJECTIF : {$this->objectif}"), 0, 1, 'C');
     }
 
     public function afficherDonnees($fiche)
@@ -52,7 +57,7 @@ class PDF extends FPDF
                 $question = (preg_match('/###/', $question)) ?
                      preg_replace('/###/', '.....', $question) :
                      $question.' .....';
-                $this->Cell($l, $h, utf8_decode($question), 1, 0, 'C');
+                $this->Cell($l, $h, $this->encode($question), 1, 0, 'C');
             }
             $this->ln();
         }
@@ -70,7 +75,7 @@ class PDF extends FPDF
                 $question = (preg_match('/###/', $question)) ?
                      preg_replace('/###/', $reponse, $question) :
                      $question.' '.$reponse;
-                $this->Cell($l, $h, utf8_decode("$question"), 1, 0, 'C');
+                $this->Cell($l, $h, $this->encode("$question"), 1, 0, 'C');
             }
             $this->ln();
         }

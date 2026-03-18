@@ -2,11 +2,12 @@
 
 class Impression
 {
-    public $fichier;
+    private $fichier;
 
-    public function Impression($niveau, $numero)
+    public function __construct($niveau, $numero)
     {
-        $this->fichier = dirname(__FILE__).DIRECTORY_SEPARATOR.$niveau.$numero."I.txt";
+        $this->fichier = dirname(__FILE__) . DIRECTORY_SEPARATOR
+            . $niveau . $numero . 'I.txt';
     }
 
     public function ajouter()
@@ -15,9 +16,10 @@ class Impression
             if (!file_exists($this->fichier)) {
                 $nombreImpressions = 1;
             } else {
-                $contenu = file($this->fichier);
-                $nombreImpressions = $contenu[0] + 1;
+                $contenu           = file($this->fichier);
+                $nombreImpressions = (int)$contenu[0] + 1;
             }
+
             $pFichier = fopen($this->fichier, 'c+');
             if (flock($pFichier, LOCK_EX)) {
                 ftruncate($pFichier, 0);
@@ -30,38 +32,35 @@ class Impression
         }
     }
 
-    public function etat()
+    public static function etat()
     {
-        $nomRep = dirname(__FILE__);
-        $tmp = array();
-        $pRep = opendir($nomRep);
+        $nomRep       = dirname(__FILE__);
+        $tmp          = [];
         $nbImpressions = 0;
-        while (false !== ($nomFichier = readdir($pRep))) {
-            if (ereg("^c....I\.txt", $nomFichier) || ereg("^c.....I\.txt", $nomFichier)) {
-                $niveau = ereg_replace("^(.*)...I\.txt$", "\\1", $nomFichier);
-                $numero = ereg_replace("^.*(...)I\.txt$", "\\1", $nomFichier);
+        $pRep         = opendir($nomRep);
 
-                $quantite = file($nomRep.DIRECTORY_SEPARATOR.$nomFichier);
-                $tmp[$niveau.$numero] = $quantite[0];
-                $nbImpressions += $quantite[0];
+        while (false !== ($nomFichier = readdir($pRep))) {
+            if (preg_match('/^c.{3,4}I\.txt$/', $nomFichier)) {
+                $niveau = preg_replace('/^(.+)\d{3}I\.txt$/', '$1', $nomFichier);
+                $numero = preg_replace('/^.+(\d{3})I\.txt$/', '$1', $nomFichier);
+
+                $quantite = file($nomRep . DIRECTORY_SEPARATOR . $nomFichier);
+                $tmp[$niveau . $numero] = $quantite[0];
+                $nbImpressions         += (int)$quantite[0];
             }
         }
         closedir($pRep);
 
         arsort($tmp);
-        $etat = "<p>Nombre d'impressions : $nbImpressions</p>";
-        $etat .= "<table>";
+
+        $etat  = "<p>Nombre d'impressions : {$nbImpressions}</p><table>";
         foreach ($tmp as $fiche => $quantite) {
-            $etat .= "<tr>";
-            $etat .= "<td>";
-            $etat .= $fiche;
-            $etat .= "</td>";
-            $etat .= "<td>";
-            $etat .= $quantite;
-            $etat .= "</td>";
-            $etat .= "<tr>";
+            $etat .= '<tr>'
+                . "<td>{$fiche}</td>"
+                . "<td>{$quantite}</td>"
+                . '</tr>';
         }
-        $etat .= "</table>";
+        $etat .= '</table>';
         return $etat;
     }
 }
