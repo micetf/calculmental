@@ -19,7 +19,7 @@ class PDF extends FPDF
     }
     public function setObjectif($objectif)
     {
-        $this->objectif = stripslashes($objectif);
+        $this->objectif = $objectif;
     }
 
     public function Header()
