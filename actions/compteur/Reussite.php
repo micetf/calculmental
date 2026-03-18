@@ -53,8 +53,14 @@ class Reussite
             $resultat .= "\n";
             $resultat .= "reussites:";
             $resultat .= $reussites;
-            $pFichier = fopen($this->fichier, "w+");
-            fwrite($pFichier, $resultat);
+            $pFichier = fopen($this->fichier, 'c+');
+            if (flock($pFichier, LOCK_EX)) {
+                ftruncate($pFichier, 0);
+                rewind($pFichier);
+                fwrite($pFichier, $resultat);
+                fflush($pFichier);
+                flock($pFichier, LOCK_UN);
+            }
             fclose($pFichier);
         }
     }
