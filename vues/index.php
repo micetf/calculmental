@@ -1,6 +1,6 @@
 <?php
-if ($vue['nom']!='imprimer.php') {
-?>
+if ($vue['nom'] != 'imprimer.php') {
+    ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,7 +9,7 @@ if ($vue['nom']!='imprimer.php') {
         <meta name="description" content="Outil permettant à des enfants de l'école primaire s'entrainer au calcul mental soit en ligne soit sur une fiche imprimée (PDF)" />
         <meta name="keywords" content="numeration, calcul mental, operation, addition, soustraction, multiplication" />
         <title>CALCUL MENTAL</title>
-        <link rel="stylesheet" href="../css-vendor/bootstrap.css">
+        <link rel="stylesheet" href="public/vendor/css/bootstrap.css">
         <link rel="stylesheet" href="./css/style.css">
         <link rel="icon" type="image/png" href="../img-micetf/logo.png">
     </head>
@@ -24,8 +24,8 @@ if ($vue['nom']!='imprimer.php') {
                 <div class="collapse navbar-collapse pull-right">
                     <label class="label label-default">
                         <?php
-                            echo date("d/m/Y");
-                        ?>
+                                echo date("d/m/Y");
+    ?>
                     </label>
                     &nbsp;
                     <a class="btn btn-default navbar-btn"
@@ -47,12 +47,12 @@ if ($vue['nom']!='imprimer.php') {
                 </div>
             </div>
         </div>
-        <script src="../js-vendor/jquery.js"></script>
-        <script src="../js-vendor/bootstrap.js"></script>
-        <script src="../js-vendor/jquery-smoothscroll.js"></script>
+        <script src="public/vendor/js/jquery.js"></script>
+        <script src="public/vendor/js/bootstrap.js"></script>
+        <script src="public/vendor/js/jquery-smoothscroll.js"></script>
         <?php
         include $vue['nom'];
-        ?>
+    ?>
         <script src="../js-micetf/contact.js"></script>
         <script src="../assets/js/bof.js"></script>
     </body>

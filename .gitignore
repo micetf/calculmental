@@ -28,6 +28,7 @@ pnpm-debug.log*
 # ============================================================
 *.log
 /vendor/
+composer.lock
 
 # ============================================================
 # Données runtime — compteurs et statistiques
