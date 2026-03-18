@@ -1,4 +1,12 @@
 <?php
+// --- Protection admin ---
+$adminSecret = hash_hmac('sha256', 'admin', getenv('APP_SECRET'));
+if (!isset($_COOKIE['admin']) || !hash_equals($adminSecret, $_COOKIE['admin'])) {
+    http_response_code(403);
+    exit('Accès interdit.');
+}
+// --- Fin protection ---
+
 include 'Reussite.php';
 include 'Impression.php';
 include 'Visiteur.php';
@@ -20,17 +28,17 @@ $compteur = new Visiteur('compteur');
 </p>
 <?php
 switch ($_GET['etat']) {
-	case 'R' :
-		echo Reussite::etat(); 
-		break;
-	case 'I' :
-		echo Impression::etat(); 
-		break;
-	case 'V' :
-		echo "Nombre de visiteurs depuis la création du site : ".$compteur->getCompteur();
-		echo "<br/>";
-		echo "Nombre de visiteurs actuellement sur le site : ".$compteur->getCompteurLive(); 
-		break;
+    case 'R':
+        echo Reussite::etat();
+        break;
+    case 'I':
+        echo Impression::etat();
+        break;
+    case 'V':
+        echo "Nombre de visiteurs depuis la création du site : ".$compteur->getCompteur();
+        echo "<br/>";
+        echo "Nombre de visiteurs actuellement sur le site : ".$compteur->getCompteurLive();
+        break;
 }
 ?>
 </body>

@@ -1,5 +1,13 @@
 <?php
 
+// --- Protection admin ---
+$adminSecret = hash_hmac('sha256', 'admin', getenv('APP_SECRET'));
+if (!isset($_COOKIE['admin']) || !hash_equals($adminSecret, $_COOKIE['admin'])) {
+    http_response_code(403);
+    exit('Accès interdit.');
+}
+// --- Fin protection ---
+
 $dir = ".";
 $dh  = opendir($dir);
 while (false !== ($filename = readdir($dh))) {
