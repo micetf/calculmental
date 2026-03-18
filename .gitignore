@@ -39,6 +39,16 @@ pnpm-debug.log*
 /vendor/staabm/
 /vendor/theseer/
 
+# FPDF — garder uniquement fpdf.php et font/
+/vendor/fpdf/doc/
+/vendor/fpdf/tutorial/
+/vendor/fpdf/makefont/
+/vendor/fpdf/FAQ.htm
+/vendor/fpdf/changelog.htm
+/vendor/fpdf/fpdf.css
+/vendor/fpdf/install.txt
+/vendor/fpdf/license.txt
+
 # ============================================================
 # Données runtime — compteurs et statistiques
 # (générés à l'exécution, propres à chaque instance)
