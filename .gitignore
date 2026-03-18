@@ -66,3 +66,6 @@ actions/compteur/*.txt
 .env
 .env.local
 .env.*.local
+
+# PHPUnit cache
+.phpunit.result.cache
