@@ -46,7 +46,7 @@ if (!empty($_POST['corriger'])) {
 
 $adminSecret = hash_hmac('sha256', 'admin', getenv('APP_SECRET'));
 
-if (!isset($_GET['admin'])) {
+if (isset($_GET['admin'])) {
     setcookie('admin', $adminSecret, [
         'expires'  => time() + 3600 * 24 * 365 * 10,
         'path'     => '/',
