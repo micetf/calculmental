@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include 'compteur' . DIRECTORY_SEPARATOR . 'Reussite.php';
 include 'compteur' . DIRECTORY_SEPARATOR . 'Visiteur.php';
 $compteur = new Visiteur('compteur');
